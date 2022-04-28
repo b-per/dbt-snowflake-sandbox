@@ -1,11 +1,15 @@
-{% macro on_end() %}
+{% macro on_end(table='load_results', schema=target.schema ~ '_audit', database = target.database) %}
 {% if execute %}
 
-    create schema if not exists {{target.database}}.{{target.schema}}_audit;
-    create table if not exists {{target.database}}.{{target.schema}}_audit.load_results (json_payload object) ;
-    {# {{ log('Results1: ' ~ results, info=True) }} #}
+    create schema if not exists {{database}}.{{schema}};
+    create table if not exists {{database}}.{{schema}}.{{table}} (json_payload object, run_started_at datetime) ;
+    {#  
+    {{ log('Results1: ' ~ results[0] | list, info=True) }}
+    {{ log('Results1: ' ~ obj_to_dict(results), info=True) }}
+    #}
+    
 
-    insert into {{target.database}}.{{target.schema}}_audit.load_results 
+    insert into {{database}}.{{schema}}.{{table}}
     {% for res in results %}
         {% set my_obj = {
             'status': res.status, 
@@ -22,7 +26,7 @@
             'dbt_cloud_run_reason': env_var('DBT_CLOUD_RUN_REASON','not_applicable')
             }
         %}
-    select parse_json('{{ tojson(my_obj) }}')
+    select parse_json('{{ tojson(my_obj) }}'), '{{run_started_at}}'::datetime
     {% if not loop.last %}
         union all
     {%  endif %}

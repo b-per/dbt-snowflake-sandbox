@@ -43,4 +43,4 @@ vars:
   marts_prefixes: ['fct_', 'dim_']
   other_prefixes: ['rpt_']
 
-on-run-end: "{{ on_end() }}"
+on-run-end: "{{ on_end(table='load_results', schema='DBT_BPERIGAUD_AUDIT', database = 'DEVELOPMENT') }}"
