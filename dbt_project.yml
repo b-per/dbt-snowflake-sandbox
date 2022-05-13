@@ -41,6 +41,8 @@ vars:
   staging_prefixes: ['stg_']
   intermediate_prefixes: ['int_']
   marts_prefixes: ['fct_', 'dim_']
-  other_prefixes: ['rpt_']
+  
+  dbt_project_evaluator:
+    other_prefixes: ['rpt_']
 
 on-run-end: "{{ on_end(table='load_results', schema='DBT_BPERIGAUD_AUDIT', database = 'DEVELOPMENT') }}"
