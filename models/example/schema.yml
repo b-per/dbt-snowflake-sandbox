@@ -2,8 +2,16 @@
 version: 2
 
 models:
+
+    - name: empty
+      description: "An empty model"
+      tests:
+        - is_not_empty
+
     - name: my_first_dbt_model
       description: "A starter dbt model"
+      tests:
+        - is_not_empty
       columns:
           - name: id
             description: "The primary key for this table"
