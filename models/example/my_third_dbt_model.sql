@@ -1,0 +1,1 @@
+select * from {{ source('dbt_bperigaud','my_first_dbt_model') }}

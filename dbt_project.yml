@@ -32,7 +32,10 @@ clean-targets:         # directories to be removed by `dbt clean`
 # as tables. These settings can be overridden in the individual model files
 # using the `{{ config(...) }}` macro.
 models:
+  dbt_artifacts:
+    +enabled: false
   my_new_project:
+    pre_hook: ["select 1"]
     # Applies to all files under models/example/
     example:
       materialized: view
@@ -42,5 +45,20 @@ vars:
   intermediate_prefixes: ['int_']
   marts_prefixes: ['fct_', 'dim_']
   other_prefixes: ['rpt_']
+  dbt_artifacts_schema: "{{target.schema}}_meta"
+  remove_from_res:
+    node: 
+      - config:
+        - materialized
+        - schema
+      - alias
 
-on-run-end: "{{ on_end(table='load_results', schema='DBT_BPERIGAUD_AUDIT', database = 'DEVELOPMENT') }}"
+on-run-end: 
+  # - "{{ on_end(table='load_results', schema='DBT_BPERIGAUD_AUDIT', database = 'DEVELOPMENT') }}"
+  - "{{ on_end2(table='load_results', schema='DBT_BPERIGAUD_AUDIT', database = 'DEVELOPMENT', macro_transform_res_dict=example_transform_res_1) }}"
+  # - "{{ dbt_artifacts.upload_results(results) }}"
+  # - "{{ log_results(results) }}"
+
+sources:
+  dbt_artifacts:
+    +schema: "xxxx"
