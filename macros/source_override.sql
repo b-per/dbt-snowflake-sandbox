@@ -1,7 +1,6 @@
-{% macro source(source_name, table_name) %}
+{% macro sourcexxx(source_name, table_name) %}
 
-    -- {{graph.sources}}
-    {{ return(graph.sources) }}
+    {{ log(graph | tojson, 1) }}
     {{ return(builtins.source(source_name, table_name)) }}
 
 {% endmacro %}

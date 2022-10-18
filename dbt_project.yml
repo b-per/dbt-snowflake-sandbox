@@ -55,7 +55,7 @@ vars:
 
 on-run-end: 
   # - "{{ on_end(table='load_results', schema='DBT_BPERIGAUD_AUDIT', database = 'DEVELOPMENT') }}"
-  - "{{ on_end2(table='load_results', schema='DBT_BPERIGAUD_AUDIT', database = 'DEVELOPMENT', macro_transform_res_dict=example_transform_res_1) }}"
+  # - "{{ on_end2(table='load_results', schema='DBT_BPERIGAUD_AUDIT', database = 'DEVELOPMENT', macro_transform_res_dict=example_transform_res_1) }}"
   # - "{{ dbt_artifacts.upload_results(results) }}"
   # - "{{ log_results(results) }}"
 
