@@ -35,7 +35,7 @@ models:
   dbt_artifacts:
     +enabled: false
   my_new_project:
-    pre_hook: ["select 1"]
+    # pre_hook: ["select 1"]
     # Applies to all files under models/example/
     example:
       materialized: view
